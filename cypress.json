@@ -1,0 +1,7 @@
+{
+  "userAgent": "Cypress/localhost",
+  "defaultCommandTimeout": 15000,
+  "pageLoadTimeout": 200000,
+  "requestTimeout": 15000,
+  "watchForFileChanges": false
+}

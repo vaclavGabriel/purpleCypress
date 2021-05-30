@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@testing-library/cypress": "^7.0.6",
+    "chai": "^4.3.4",
+    "cypress": "7.4.0"
+  }
+}
