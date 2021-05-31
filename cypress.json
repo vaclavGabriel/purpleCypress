@@ -1,4 +1,5 @@
 {
+  "baseUrl": "https://revolgy-forms-case-study-master.staging.axiory.com/jp/registration/demo",
   "userAgent": "Cypress/localhost",
   "defaultCommandTimeout": 15000,
   "pageLoadTimeout": 200000,
