@@ -91,7 +91,7 @@ describe("Examples of BDD scenarios automation in Cypress", () => {
     const sizes = ["iphone-8", "ipad-2"]
     const testId = ["P004", "P005"]
     sizes.forEach((size) => {
-        it(`${testId.shift()} Display registration form on responsive device (${size})`, () => {
+        it(`${testId.shift()} Display the registration form on a responsive device (${size})`, () => {
             cy.viewport(size)
             cy.visit("/")
             cy.get("#firstname").should("be.visible")
@@ -109,7 +109,7 @@ describe("Examples of BDD scenarios automation in Cypress", () => {
         })
     })
 
-    it("P006 Only valid email addresses are permitted in the email address field", () => {
+    it("P006 Test validation of the email address field", () => {
         cy.visit("/")
         cy.findByRole('textbox', { name: /メールアドレス/i }).click({ force:true }).blur({ force:true })
         cy.findByText( /お客様のメールアドレスをご教示下さい。ご教示頂いたメールアドレスは、弊社サービスまたはお客様のお口座に関する重要な情報をお送りする際に使用させて頂きます。スパムの心配はございません。/i ).should("be.visible")
