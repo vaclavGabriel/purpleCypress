@@ -13,6 +13,9 @@ export function submitForm() {
 }
 
 
+
+
+export const randomPhoneNumber = Math.floor(Math.random() * 999999999999999) + 100000000
 const platform = ["mt4", "ctrader"]
 export const randomPlatform = platform[Math.floor(Math.random() * platform.length)]
 const account = ["standard", "nano"]

@@ -6,12 +6,12 @@ import {
     randomAccount,
     randomLeverage,
     randomCurrency,
-    randomDeposit
+    randomDeposit, randomPhoneNumber
 } from "../../support/functions"
 
 describe("Examples of BDD scenarios automation in Cypress", () => {
 
-    it("P001 Send data from the form to the endpoint", () => {
+    it("P001 Send data from the registration form to the endpoint", () => {
         cy.visit("https://revolgy-forms-case-study-master.staging.axiory.com/jp/registration/demo")
         cy.get("#firstname").type("Evzen")
         cy.get("#lastname").type("Savojsky")
@@ -62,7 +62,45 @@ describe("Examples of BDD scenarios automation in Cypress", () => {
         })
     })
 
-    it("P002 Trigger validation of the form", () => {
+    it("P002 Submit the registration form with random data", () => {
+        cy.visit("https://revolgy-forms-case-study-master.staging.axiory.com/jp/registration/demo")
+        cy.get("#firstname").type("Evzen")
+        cy.get("#lastname").type("Savojsky")
+        cy.get("#phone").type(randomPhoneNumber)
+        cy.get("#countryLabel").type(randomCountries).blur()
+        cy.get("#email").type("test@example.com")
+        cy.get("#platform").select(randomPlatform)
+        cy.get("#accountType").select(randomAccount)
+        cy.get("#leverage").select(randomLeverage)
+        cy.get("#currency").select(randomCurrency)
+        cy.get("#deposit").type(randomDeposit)
+        cy.get("#iAgreeDemo").check()
+        submitForm()
+
+        cy.intercept(/submit-form/).as("submit-form")
+        cy.wait("@submit-form")
+
+        // cy.intercept(/submit-form/).as("submit-form")
+        // cy.wait("@submit-form").then((req) => {
+        //     const requestObject = queryStringToJSON(req.request.body)
+        //     expect(req.response.statusCode).to.equal(302)
+        //     expect(requestObject).to.include({
+        //         firstname: "Evzen",
+        //         lastname: "Savojsky",
+        //         phone: "1234567890",
+        //         country: queryString.stringify(parse(randomCountries)),
+        //         email: "test@example.com",
+        //         platform: randomPlatform,
+        //         accountType: randomAccount,
+        //         leverage: randomLeverage,
+        //         currency: randomCurrency,
+        //         deposit: randomDeposit.toString(),
+        //         iAgreeDemo: ""
+        //     })
+        // })
+    })
+
+    it("P003 Trigger validation of the registration form", () => {
         cy.visit("https://revolgy-forms-case-study-master.staging.axiory.com/jp/registration/demo")
         submitForm()
         cy.get('.error-level-error').should("be.visible").and("have.length", 10)
@@ -89,29 +127,6 @@ describe("Examples of BDD scenarios automation in Cypress", () => {
         })
     })
 
-    it.only("P00 ", () => {
-        cy.visit("https://revolgy-forms-case-study-master.staging.axiory.com/jp/registration/demo")
-        cy.get("#firstname").type("Evzen")
-        cy.get("#lastname").type("Savojsky")
-        cy.get("#phone").type("1234567890")
-        cy.get("#countryLabel").type(randomCountries).blur()
-        cy.get("#email").type("test@example.com")
-        cy.get("#platform").select(randomPlatform)
-        cy.get("#accountType").select(randomAccount)
-        cy.get("#leverage").select(randomLeverage)
-        cy.get("#currency").select(randomCurrency)
-        cy.get("#deposit").type(randomDeposit)
-        cy.get("#iAgreeDemo").check()
-        submitForm()
 
-        cy.intercept(/submit-form/).as("submit-form")
-        cy.wait("@submit-form")
-
-        // cy.intercept("POST", "/submit-form/", (req) => {
-        //     req.body = `firstname=&lastname=jksdf&phone=%29%28*%26%5E%25%24%25%5E%26*%28&country=Haiti&email=fasdfasdfsdf%40dsfasd.cz&platform=mt4&accountType=nano&leverage=1%3A50&currency=JPY&deposit=1000&iAgreeDemo=&recaptcha=03AGdBq25_tAGTVHVg_TtF-WST60ZTyx_S51qVQ6pdtI1dTEq1rSzZLdYM_UtQ3t6YGqsjZZY1-gyWX8xclIEiuFhHCA_lvf2JOuY3CBGLjxGE3ng9DbiTs46UVesB5WfUn-tyX7flMdwxnEel7ZlU377rH03aE5pqyIadepokj_uxqFASDvgUdiLc-sUrOoEPYG_bUistrticuQueFBfh4nCMxcqpwG2xBxkCjzhuzB1Z1p5mONpRyHiNVyzJWg-AnvivK5gZo3OZMdXg9vTlEyjiPsgkNBf1xDHuw6vK8_xejGAOkW4JDEbkc-aatq5KInzWvLnabeA_9IXOGzRkCTTCkTY2-1SPiDssauitkoWmhmlxVOvD3u6JM4bYeZqrptZZGj_hpF58JM8FhCFjpMv4RqvL87vLe0xaAYUYezzWkKXm6hgELPV0DOtWEe7NVJRkBm-YiJwCxdgTW-A0N6x9Vm78lHvbw2fpst5DXvmJUu5Rlu30I4U&ibCode=&language=ja&browser=chrome+90.0.4430%2C+mobile%3A+false%2C+os%3A+Windows+10&step=intro&graphqlUrl=https%3A%2F%2Fjapn8252x0.execute-api.ap-northeast-1.amazonaws.com%2Fmaster%2Fgraphql&graphqlType=demoAccounts&graphqlResolver=submit`
-        //     // send the modified request and skip any other matching request handlers
-        //     req.continue()
-        // })
-    })
 })
 
